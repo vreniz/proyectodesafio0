@@ -1,13 +1,21 @@
+# =========================================
+# IMPORTS (Importación de módulos)
+# =========================================
+# Traemos funciones de otros archivos para mantener el código organizado (modularidad)
 from clients import register_client, view_clients
 from products import register_product, view_products
 from orders import create_order, view_orders, calculate_income
 from reports import generate_report
 from validationfunct import input_int, input_float,input_string,input_name,input_email
 
+# =========================================
+# IN-MEMORY DATABASE (Almacenamiento en memoria)
+# =========================================
+# Diccionarios donde se almacenan los datos durante la ejecución del programa
 
-clients = {}
-products = {}
-orders = {}
+clients = {}   # Guarda clientes
+products = {}  # Guarda productos
+orders = {}    # Guarda pedidos
 
 # =========================================
 # VALIDATION FUNCTIONS
@@ -79,8 +87,9 @@ def input_name(prompt):
 """
 
 # =========================================
-# CONTINUE FUNCTION
+# CONTINUE FUNCTION (Control de flujo)
 # =========================================
+# Esta función pregunta al usuario si desea volver al menú o salir del programa
 
 def ask_to_continue():
     while True:
@@ -96,13 +105,15 @@ def ask_to_continue():
 
 
 # =========================================
-# MENU
+# MENU (Interfaz principal)
 # =========================================
+# Controla toda la interacción con el usuario
 
 def menu():
-    running = True
+    running = True # Variable de control del ciclo principal
 
     while running:
+         # Mostrar menú de opciones
         print("\n===== MENU =====")
         print("1. Register Client")
         print("2. Register Product")
@@ -113,43 +124,53 @@ def menu():
         print("7. View Clients")
         print("8. View Products")
         print("9. Exit")
-
+        
+        # Leer opción del usuario
         option = input("Select an option: ").strip()
 
-        # REGISTER CLIENT
+        # 
+        # =========================================
+        # OPTION 1: REGISTER CLIENT
+        # =========================================
         if option == "1":
             client_id = input_int("Client ID: ")
             first_name = input_name("First Name: ")
             last_name = input_name("Last Name: ")
             email = input_email("Email: ")
 
-            global clients
-            clients, msg = register_client(clients, client_id, first_name, last_name, email)
+             # Se registra el cliente
+            msg = register_client(clients, client_id, first_name, last_name, email)
             print(msg)
-
+            # Se pregunta si desea continuar
             running = ask_to_continue()
 
-        # REGISTER PRODUCT
+        # 
+        # =========================================
+        # OPTION 2: REGISTER PRODUCT
+        # =========================================
         elif option == "2":
             product_id = input_int("Product ID: ")
             name = input_string("Name: ")
             price = input_float("Price: $ ")
 
-            global products
-            products, msg = register_product(products, product_id, name, price)
+            
+            msg = register_product(products, product_id, name, price)
             print(msg)
 
             running = ask_to_continue()
 
-        # CREATE ORDER
+        # 
+        # =========================================
+        # OPTION 3: CREATE ORDER
+        # =========================================
         elif option == "3":
             order_id = input_int("Order ID: ")
             client_id = input_int("Client ID: ")
             product_id = input_int("Product ID: ")
             quantity = input_int("Quantity: ")
 
-            global orders
-            orders, msg = create_order(
+            # Se crea el pedido validando existencia de cliente y producto
+            msg = create_order(
                 orders, order_id, client_id, product_id, quantity, clients, products
             )
             print(msg)
@@ -166,7 +187,7 @@ def menu():
             print(f"Total Income: {calculate_income(orders)}")
             running = ask_to_continue()
 
-        # REPORT
+        # GENERATE REPORT
         elif option == "6":
             print(generate_report(orders, clients, products))
             running = ask_to_continue()
@@ -184,15 +205,15 @@ def menu():
         # EXIT
         elif option == "9":
             print("Goodbye!")
-            running = False
+            running = False # Finaliza el programa
 
         else:
             print("Invalid option")
 
 
 # =========================================
-# MAIN
+# MAIN (Punto de entrada del programa)
 # =========================================
-
+# Esta condición asegura que el programa se ejecute solo si este archivo es el principal
 if __name__ == "__main__":
     menu()
