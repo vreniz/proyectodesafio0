@@ -3,17 +3,18 @@
 # - Registrar clientes
 # - Mostrar la lista de clientes
 def register_client(clients_dict, client_id, first_name, last_name, email):
-    # Verifica si el cliente ya existe (evita duplicados)
-    if client_id in clients_dict:
+    
+    if client_id in clients_dict: # Verifica si el cliente ya existe (evita duplicados)
         return "Client already exists"
-        # Se guarda el cliente en el diccionario usando su ID como clave
-    clients_dict[client_id] = {
+        
+    clients_dict[client_id] = { # Se guarda el cliente en el diccionario usando su ID como clave
         "first_name": first_name,
         "last_name": last_name,
         "email": email
     }
     # Retorna mensaje de éxito
     return "Client registered successfully"
+
 # FUNCION VER CLIENTES
 # Esta función muestra todos los clientes registrados
 def view_clients(clients_dict):
