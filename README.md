@@ -1,10 +1,10 @@
-#Order Manager
+# Order Manager
 
 This program is designed to register and manage orders, clients, and sales reports.  
 It uses dictionaries to store information, and organizes the code into modules.  
 Navigation is handled through a menu, where you can select the desired action.
 
-##Features
+## Features
 
 1.Client Registration
    -Register clients using their ID, first name, last name, and email.  
